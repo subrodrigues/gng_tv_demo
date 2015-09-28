@@ -13,6 +13,7 @@ import pt.gngtv.main.controller.MainController;
 import pt.gngtv.main.controller.MainControllerInterface;
 import pt.gngtv.main.service.GNGWebService;
 import pt.gngtv.main.service.WebService;
+import pt.gngtv.model.Model;
 import pt.gngtv.model.Wishlist;
 
 /**
@@ -41,7 +42,16 @@ public class MainActivity extends Activity implements MainControllerInterface {
 
     @Override
     public void setContent(List<Wishlist> data) {
-        if(data != null && data.size() > 0)
+        if(data != null && data.size() > 0) {
             Log.e("First Wishlist Name:", data.get(0).getTitle());
+            mController.loadWishlistModels(data.get(0).getId(), Globals.ACCESS_TOKEN);
+        }
+    }
+
+    @Override
+    public void setModelsContent(List<Model> data) {
+        if(data != null && data.size() > 0) {
+            Log.e("First Model Name:", data.get(0).getName());
+        }
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import pt.gngtv.main.MainActivity;
 import pt.gngtv.main.service.GNGWebService;
 import pt.gngtv.model.BaseModel;
+import pt.gngtv.model.Model;
 import pt.gngtv.model.Wishlist;
 import pt.gngtv.utils.Utils;
 import retrofit.Callback;
@@ -25,10 +26,10 @@ public class MainController {
     }
 
     // TODO: implement cache
-    public void loadInfo(String user_id, String access_token) {
+    public void loadInfo(String userId, String accessToken) {
 
-        if (access_token != null) {
-            ((GNGWebService) mActivity.getService().getService()).getWishlists(null, Utils.getLanguage(), user_id, access_token, "cover,sociable", new Callback<BaseModel<List<Wishlist>>>() {
+        if (accessToken != null) {
+            ((GNGWebService) mActivity.getService().getService()).getWishlists(null, Utils.getLanguage(), userId, accessToken, "cover,sociable", new Callback<BaseModel<List<Wishlist>>>() {
 
                 @Override
                 public void success(BaseModel<List<Wishlist>> baseModels, Response response) {
@@ -45,6 +46,29 @@ public class MainController {
                 }
             });
         } else {
+            // TODO: deal with it
+        }
+    }
+
+    public void loadWishlistModels(String wishlistId, String accessToken) {
+
+        if (accessToken != null) {
+            ((GNGWebService) mActivity.getService().getService()).getWishlistModels(null, Utils.getLanguage(), wishlistId, accessToken, "cover", new Callback<BaseModel<List<Model>>>() {
+
+                @Override
+                public void success(BaseModel<List<Model>> baseModels, Response response) {
+
+                    if (mActivity != null && !mActivity.isFinishing() && mCallback != null)
+                        mCallback.setModelsContent(baseModels.getData());
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    // TODO: deal with it
+                }
+            });
+        }
+        else {
             // TODO: deal with it
         }
     }

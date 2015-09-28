@@ -2,6 +2,7 @@ package pt.gngtv.main.controller;
 
 import java.util.List;
 
+import pt.gngtv.model.Model;
 import pt.gngtv.model.Wishlist;
 
 /**
@@ -9,4 +10,6 @@ import pt.gngtv.model.Wishlist;
  */
 public interface MainControllerInterface {
     void setContent(List<Wishlist> data);
+
+    void setModelsContent(List<Model> data);
 }
