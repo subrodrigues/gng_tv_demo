@@ -25,3 +25,25 @@ proguard/
 
 # Log Files
 *.log
+gng_tv_demo.iml
+.idea/.name
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/runConfigurations.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/copyright/profiles_settings.xml
+.idea/dictionaries/filiperodrigues.xml
+.idea/libraries/appcompat_v7_23_0_1.xml
+.idea/libraries/glide_3_4_0.xml
+.idea/libraries/gson_2_3_1.xml
+.idea/libraries/leanback_v17_23_0_1.xml
+.idea/libraries/okhttp_2_0_0.xml
+.idea/libraries/okhttp_urlconnection_2_0_0.xml
+.idea/libraries/okio_1_0_0.xml
+.idea/libraries/recyclerview_v7_23_0_1.xml
+.idea/libraries/retrofit_1_9_0.xml
+.idea/libraries/support_annotations_23_0_1.xml
+.idea/libraries/support_v4_23_0_1.xml
