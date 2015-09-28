@@ -15,4 +15,7 @@
     <color name="orange">#FADCA7</color>
     <color name="yellow">#EEFF41</color>
     <color name="default_background">#3d3d3d</color>
+
+    <color name="red_levis">#E31937</color>
+    <color name="playing_label_text">#D06C7D</color>
 </resources>
