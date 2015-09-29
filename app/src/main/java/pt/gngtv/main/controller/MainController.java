@@ -6,6 +6,7 @@ import android.util.Log;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.FirebaseException;
 import com.firebase.client.ValueEventListener;
 
 import java.util.List;
@@ -84,21 +85,23 @@ public class MainController {
         }
     }
 
-    public void registerFirebaseListener(){
+    public void registerFirebaseListener() {
         Log.i("GNGTV", "Data changed");
         gngFirebaseRoot.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Log.i("GNGTV", "Data changed");
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    GNGFirebaseModel userInfo = postSnapshot.getValue(GNGFirebaseModel.class);
+                try {
+                    GNGFirebaseModel userInfo = snapshot.getValue(GNGFirebaseModel.class);
                     Log.i("GNGTV", "There is a user: " + Boolean.toString(userInfo != null));
-                    if (userInfo != null)
+                    if (userInfo != null) {
                         mCallback.setUserInfo(userInfo);
+                    }
                     //else
                     //mCallback.error???
+                } catch (FirebaseException fe) {
+                    Log.e("GNGTV", "Error while parsing firebase snapshot.", fe);
                 }
-
             }
 
             @Override
