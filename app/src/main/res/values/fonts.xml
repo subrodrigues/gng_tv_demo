@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="roobotoCondensedLight">fonts/RobotoCondensed-Light.ttf</string>
+    <string name="roobotoCondensedRegular">fonts/RobotoCondensed-Regular.ttf</string>
+    <string name="roobotoCondensedBold">fonts/RobotoCondensed-Bold.ttf</string>
+
+</resources>
