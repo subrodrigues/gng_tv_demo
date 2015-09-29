@@ -34,6 +34,7 @@ public class Cover implements Parcelable {
 
     }
 
+    public Cover() {}
     private Cover(Parcel in) {
         this.id = in.readInt();
         this.type = in.readInt();
