@@ -1,10 +1,19 @@
 package pt.gngtv.main.controller;
 
+import android.os.Bundle;
+import android.util.Log;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import java.util.List;
 
-import pt.gngtv.main.MainActivity;
+import pt.gngtv.main.MainActivityGNG;
 import pt.gngtv.main.service.GNGWebService;
 import pt.gngtv.model.BaseModel;
+import pt.gngtv.model.GNGFirebaseModel;
 import pt.gngtv.model.Model;
 import pt.gngtv.model.Wishlist;
 import pt.gngtv.utils.Utils;
@@ -17,12 +26,15 @@ import retrofit.client.Response;
  */
 public class MainController {
 
-    private MainActivity mActivity;
+    private MainActivityGNG mActivity;
     private MainControllerInterface mCallback;
+    private Firebase gngFirebaseRoot;
 
-    public MainController(MainActivity activity) {
+    public MainController(MainActivityGNG activity) {
         this.mActivity = activity;
         this.mCallback = activity;
+        Firebase.setAndroidContext(activity.getApplicationContext());
+        gngFirebaseRoot = new Firebase("https://gngdemo.firebaseio.com/");
     }
 
     // TODO: implement cache
@@ -41,7 +53,7 @@ public class MainController {
 
                 @Override
                 public void failure(RetrofitError error) {
-                 //   mCallback.processError(error);
+                    //   mCallback.processError(error);
                     // TODO: deal with it
                 }
             });
@@ -67,9 +79,32 @@ public class MainController {
                     // TODO: deal with it
                 }
             });
-        }
-        else {
+        } else {
             // TODO: deal with it
         }
+    }
+
+    public void registerFirebaseListener(){
+        Log.i("GNGTV", "Data changed");
+        gngFirebaseRoot.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Log.i("GNGTV", "Data changed");
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    GNGFirebaseModel userInfo = postSnapshot.getValue(GNGFirebaseModel.class);
+                    Log.i("GNGTV", "There is a user: " + Boolean.toString(userInfo != null));
+                    if (userInfo != null)
+                        mCallback.setUserInfo(userInfo);
+                    //else
+                    //mCallback.error???
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.i("GNGTV", "Error:" + firebaseError.getMessage());
+            }
+        });
     }
 }
