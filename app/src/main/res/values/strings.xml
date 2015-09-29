@@ -4,4 +4,6 @@
     <string name="playing_label">A tocar</string>
     <string name="whishlist_label">Artigos da sua whishlist\n%1$s</string>
     <string name="welcome">Bem-vindo,\n%1$s</string>
+    <string name="welcome_nouser">Levi\'s Smart Signage\nLigue aqui o Bluetooth do seu smartphone</string>
+    <string name="price_label">%1$s€</string>
 </resources>
