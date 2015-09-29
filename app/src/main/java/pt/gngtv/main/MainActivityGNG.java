@@ -35,7 +35,7 @@ public class MainActivityGNG extends Activity implements MainControllerInterface
         if (mController == null) {
             mController = new MainController(this);
             mController.loadInfo(Globals.USER_ID, Globals.ACCESS_TOKEN);
-            mController.w();
+            mController.registerFirebaseListener();
         }
     }
 
