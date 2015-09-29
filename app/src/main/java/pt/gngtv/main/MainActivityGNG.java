@@ -222,9 +222,9 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         Typeface regular = Typeface.createFromAsset(getAssets(), getString(R.string.roobotoCondensedRegular));
         int welcomeLegnth = getString(R.string.whishlist_label,"").trim().length();
         spanName.setSpan (new TypeFaceSpan("", light), 0, welcomeLegnth, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        spanName.setSpan(new RelativeSizeSpan(0.6f), 0, welcomeLegnth, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spanName.setSpan(new RelativeSizeSpan(0.8f), 0, welcomeLegnth, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         spanName.setSpan(new TypeFaceSpan("", regular), welcomeLegnth + 1, spanName.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        spanName.setSpan(new RelativeSizeSpan(0.8f), welcomeLegnth + 1, spanName.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spanName.setSpan(new RelativeSizeSpan(1.0f), welcomeLegnth + 1, spanName.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         return spanName;
     }
 

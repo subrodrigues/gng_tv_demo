@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="left_panel_left_margin">20dp</dimen>
+    <dimen name="left_panel_left_margin">30dp</dimen>
     <dimen name="left_panel_right_margin">@dimen/left_panel_left_margin</dimen>
     <dimen name="left_panel_bottom_margin">30dp</dimen>
 
