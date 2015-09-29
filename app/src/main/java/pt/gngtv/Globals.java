@@ -14,6 +14,6 @@ public class Globals {
     public static final long CONNECTION_TIMEOUT = 10000;
     public static final long SOCKET_TIMEOUT = 10000;
 
-    public static final String USER_ID = "486";
-    public static final String ACCESS_TOKEN = "lcMTmMvBDzGY5UW7EcyAj7GWILBmFHz2JCX0akHI8ZZL7BdOOS015y7kCfFEveosPpUxYygjGFhoJEuLgINad0P0SR3LbCPDWsRroYRdQmXrJYhEb4hUEutM5ymEHhWI";
+    public static final String USER_ID = "683";
+    public static final String ACCESS_TOKEN = "Mco9Ofr6YARKtOlHzUqsL7hgBjwpI9mSJHZTHFmNzNvfNIcOjo60yr14UCKJ2D1BNH5fyOfDLlhCoNtHM9x08BZdkmzItaH4EcjpF8sWKH205jdl2SGpA1wisxnKliqi";
 }
