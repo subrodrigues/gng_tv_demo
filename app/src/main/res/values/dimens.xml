@@ -22,5 +22,6 @@
     <dimen name="playing_song_icon_margin_right">30dp</dimen>
     <dimen name="playing_song_title_text_size">20sp</dimen>
     <dimen name="text_strike_stroke_width">2dp</dimen>
+    <dimen name="shape_triangle_height">100dp</dimen>
 
 </resources>

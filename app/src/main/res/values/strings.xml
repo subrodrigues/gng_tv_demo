@@ -2,4 +2,6 @@
     <string name="app_name">GNG TV</string>
 
     <string name="playing_label">A tocar</string>
+    <string name="whishlist_label">Artigos da sua whishlist\n%1$s</string>
+    <string name="welcome">Bem-vindo,\n%1$s</string>
 </resources>

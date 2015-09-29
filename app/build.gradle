@@ -24,6 +24,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 }
 
 dependencies {
@@ -37,4 +43,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.firebase:firebase-client-android:2.4.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0'
 }
