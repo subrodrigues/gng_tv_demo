@@ -1,6 +1,5 @@
 package pt.gngtv.main.controller;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import com.firebase.client.DataSnapshot;
@@ -10,9 +9,11 @@ import com.firebase.client.FirebaseException;
 import com.firebase.client.ValueEventListener;
 
 import java.util.List;
+import java.util.Random;
 
 import pt.gngtv.main.MainActivityGNG;
 import pt.gngtv.main.service.GNGWebService;
+import pt.gngtv.main.spotify.SpotifyControllerInterface;
 import pt.gngtv.model.BaseModel;
 import pt.gngtv.model.GNGFirebaseModel;
 import pt.gngtv.model.Model;
@@ -29,11 +30,13 @@ public class MainController {
 
     private MainActivityGNG mActivity;
     private MainControllerInterface mCallback;
+    private SpotifyControllerInterface mSpotifyCallback;
     private Firebase gngFirebaseRoot;
 
     public MainController(MainActivityGNG activity) {
         this.mActivity = activity;
         this.mCallback = activity;
+        this.mSpotifyCallback = activity;
         Firebase.setAndroidContext(activity.getApplicationContext());
         gngFirebaseRoot = new Firebase("https://gngdemo.firebaseio.com/");
     }
@@ -96,6 +99,8 @@ public class MainController {
                     Log.i("GNGTV", "There is a user: " + Boolean.toString(userInfo != null));
                     if (userInfo != null) {
                         mCallback.setUserInfo(userInfo);
+                        //TODO lets make the search
+                        getSpotifyMusicURI(userInfo.artists_names, userInfo.favorite_genre);
                     }
                     //else
                     //mCallback.error???
@@ -110,4 +115,23 @@ public class MainController {
             }
         });
     }
+
+    private String getSpotifyMusicURI(String artists_names, String genre) {
+        String[] artists = artists_names.split(";_;");
+
+        if(artists.length > 0){
+            Random r = new Random();
+            int bandIdx = r.nextInt(artists.length);
+
+            String artistSongURI = mSpotifyCallback.getTopSongForArtist(artists[bandIdx]);
+            if(artistSongURI != null){
+                return artistSongURI;
+            }
+        }
+        //TODO search for genre
+        return mSpotifyCallback.getTopSongForArtist(genre);
+
+    }
+
+
 }

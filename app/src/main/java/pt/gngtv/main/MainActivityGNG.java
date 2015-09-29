@@ -1,6 +1,5 @@
 package pt.gngtv.main;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -25,6 +24,7 @@ import pt.gngtv.main.controller.MainController;
 import pt.gngtv.main.controller.MainControllerInterface;
 import pt.gngtv.main.service.GNGWebService;
 import pt.gngtv.main.service.WebService;
+import pt.gngtv.main.spotify.SpotifyBaseActivity;
 import pt.gngtv.model.GNGFirebaseModel;
 import pt.gngtv.model.Model;
 import pt.gngtv.model.Wishlist;
@@ -34,7 +34,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Created by joseaguiar on 25/09/15.
  */
-public class MainActivityGNG extends Activity implements MainControllerInterface {
+public class MainActivityGNG extends SpotifyBaseActivity implements MainControllerInterface {
     private WebService<GNGWebService> service;
     private MainController mController = null;
 
