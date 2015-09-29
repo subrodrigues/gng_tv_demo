@@ -29,6 +29,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,6 +55,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     private WebService<GNGWebService> service;
     private MainController mController = null;
     private CountDownTimer timer;
+    private String accessToken;
 
     @Bind(R.id.discountLabel) TextView txtProductDiscount;
     @Bind(R.id.priceLabel) TextView txtProductPrice;
@@ -78,7 +80,6 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
         if (mController == null) {
             mController = new MainController(this);
-            mController.loadInfo(Globals.USER_ID, Globals.ACCESS_TOKEN);
             mController.registerFirebaseListener();
         }
 
@@ -107,7 +108,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         if(data != null && data.size() > 0) {
             Log.e("First Wishlist Name:", data.get(0).getTitle());
             txtWhishlist.setText(formatWhishlistName(data.get(0).getTitle()));
-            mController.loadWishlistModels(data.get(0).getId(), Globals.ACCESS_TOKEN);
+            mController.loadWishlistModels(data.get(0).getId(), accessToken);
         }
     }
 
@@ -124,6 +125,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                 public void onTick(long millisUntilFinished) {
                     position = position < data.size() - 1 ? ++position : 0; //Go ahead through all model positions. If it reaches the end then restart over again.
                     Model product = data.get(position);
+                    if(product.getPrice() == 0) product.setPrice(ThreadLocalRandom.current().nextInt(55, 150)); //Setting random price for demonstration purposes
 
                     if(product.getCover().getImage() != null) {
                         Glide.with(MainActivityGNG.this).load(product.getCover().getImage()).asBitmap().into(new SimpleTarget<Bitmap>(1080, 1080) {
@@ -143,6 +145,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                     txtProductDescription.setText(product.getName());
                     txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
                     txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
+
+                    if(data.size() == 1) cancel();
                 }
 
                 public void onFinish() { /** Do nothing. */ }
@@ -153,8 +157,15 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     @Override
     public void setUserInfo(GNGFirebaseModel userInfo) {
         Toast.makeText(this, "user: " + userInfo.user_name, Toast.LENGTH_LONG).show();
-        setUserName(userInfo.user_name);
-        showViews(true);
+        if(TextUtils.isEmpty(userInfo.access_token) || TextUtils.isEmpty(userInfo.artists_names) || TextUtils.isEmpty(userInfo.favorite_genre) || TextUtils.isEmpty(userInfo.profile_url)
+                || TextUtils.isEmpty(userInfo.user_id) || TextUtils.isEmpty(userInfo.user_name)) {
+            showViews(false);
+        }else {
+            setUserName(userInfo.user_name);
+            accessToken = userInfo.access_token;
+            mController.loadInfo(userInfo.user_id, accessToken);
+            showViews(true);
+        }
     }
 
     private void showViews(boolean show) {
