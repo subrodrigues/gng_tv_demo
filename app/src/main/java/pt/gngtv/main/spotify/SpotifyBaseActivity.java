@@ -21,7 +21,11 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.Spotify;
 
+import java.util.List;
 import java.util.Locale;
+
+import pt.gngtv.main.controller.SpotifyControllerInterface;
+import pt.gngtv.model.SpotifyArtistItem;
 
 /**
  * Created by jcalado on 29/09/15.
@@ -29,19 +33,11 @@ import java.util.Locale;
 public abstract class SpotifyBaseActivity extends Activity implements PlayerNotificationCallback, ConnectionStateCallback, SpotifyControllerInterface{
 
     @SuppressWarnings("SpellCheckingInspection")
-    private static final String CLIENT_ID = "a86f52fcbc994e8e82801081e3c4a17c";
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final String REDIRECT_URI = "http://www.levi.com/pt/pt_PT";
+    private static final String CLIENT_ID = "b98bea9caabf47d59dd2245e1ef764f6";
+    // TODO: Replace with your redirect URI
+    private static final String REDIRECT_URI = "pt-spotifydemo://callback";
     @SuppressWarnings("SpellCheckingInspection")
     private static final String TEST_SONG_URI = "spotify:track:6JEK0CvvjDjjMUBFoXShNZ";
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final String TEST_SONG_MONO_URI = "spotify:track:1FqY3uJypma5wkYw66QOUi";
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final String TEST_SONG_48kHz_URI = "spotify:track:3wxTNS3aqb9RbBLZgJdZgH";
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final String TEST_PLAYLIST_URI = "spotify:user:sqook:playlist:0BZvnsfuqmnLyj6WVRuSte";
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final String TEST_QUEUE_SONG_URI = "spotify:track:5EEOjaJyWvfMglmEwf9bG3";
 
     /**
      * Request code that will be passed together with authentication result to the onAuthenticationResult
@@ -50,7 +46,6 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
     private Player mPlayer;
     private BroadcastReceiver mNetworkStateReceiver;
     private PlayerState mCurrentPlayerState;
-
 
     private void openLoginWindow() {
         final AuthenticationRequest request = new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
@@ -64,6 +59,8 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         openLoginWindow();
+
+
     }
 
     @Override
@@ -265,6 +262,7 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
     }
 
     public void playSong(String uri) {
+
         if(mPlayer != null && mPlayer.isInitialized() && mPlayer.isLoggedIn()){
             logStatus("Play song with URI: " + uri);
             mPlayer.play(uri);
@@ -279,8 +277,19 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
         }
     }
 
-    //TODO implement search (maybe through the webapi?)
-    public String getTopSongForArtist(String artistName) {
-        return TEST_SONG_URI;
+
+    @Override
+    public void setArtistList(List<SpotifyArtistItem> artists) {
+
+        if(artists != null && artists.size() > 0){
+            Log.e("Spotify", artists.toString());
+
+            SpotifyArtistItem item = artists.get(0);
+
+        }
+        else{
+            Log.e("Spotify", "Pesquisa sem resultados");
+        }
     }
+
 }

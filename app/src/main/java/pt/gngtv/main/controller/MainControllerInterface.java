@@ -12,6 +12,7 @@ import pt.gngtv.model.Wishlist;
  * Created by filiperodrigues on 28/09/15.
  */
 public interface MainControllerInterface {
+
     void setContent(List<Wishlist> data);
 
     void setModelsContent(List<Model> data);

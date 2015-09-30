@@ -3,6 +3,7 @@ package pt.gngtv;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -22,6 +23,7 @@ import retrofit.converter.GsonConverter;
 public class GNGTVApplication extends Application {
 
     public RestAdapter restAdapter;
+    public RestAdapter spotifyAdapter;
 
     @Override
     public void onCreate() {
@@ -31,6 +33,9 @@ public class GNGTVApplication extends Application {
         okHttpClient.setCookieHandler(CookieHandler.getDefault());
         okHttpClient.setConnectTimeout(Globals.CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS);
         okHttpClient.setReadTimeout(Globals.SOCKET_TIMEOUT, TimeUnit.MILLISECONDS);
+
+        if (BuildConfig.DEBUG)
+            okHttpClient.networkInterceptors().add(new StethoInterceptor());
 
         Gson gson = new GsonBuilder()
                 .setExclusionStrategies(new ExclusionStrategy() {
@@ -53,6 +58,15 @@ public class GNGTVApplication extends Application {
                 .setConverter(new GsonConverter(gson))
                 .setEndpoint(Globals.HOST_NAME)
                 .build();
+
+        spotifyAdapter = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new OkClient(okHttpClient))
+                .setConverter(new GsonConverter(gson))
+                .setEndpoint(Globals.SPOTIFY_HOST_NAME)
+                .build();
+
+
     }
 
     @Override

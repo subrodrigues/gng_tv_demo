@@ -13,7 +13,6 @@ import java.util.Random;
 
 import pt.gngtv.main.MainActivityGNG;
 import pt.gngtv.main.service.GNGWebService;
-import pt.gngtv.main.spotify.SpotifyControllerInterface;
 import pt.gngtv.model.BaseModel;
 import pt.gngtv.model.GNGFirebaseModel;
 import pt.gngtv.model.Model;
@@ -30,13 +29,13 @@ public class MainController {
 
     private MainActivityGNG mActivity;
     private MainControllerInterface mCallback;
-    private SpotifyControllerInterface mSpotifyCallback;
+    private SpotifyController mController;
     private Firebase gngFirebaseRoot;
 
     public MainController(MainActivityGNG activity) {
         this.mActivity = activity;
         this.mCallback = activity;
-        this.mSpotifyCallback = activity;
+        this.mController = new SpotifyController(activity);
         Firebase.setAndroidContext(activity.getApplicationContext());
         gngFirebaseRoot = new Firebase("https://gngdemo.firebaseio.com/");
     }
@@ -89,7 +88,9 @@ public class MainController {
     }
 
     public void registerFirebaseListener() {
+
         Log.i("GNGTV", "Data changed");
+
         gngFirebaseRoot.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -116,21 +117,17 @@ public class MainController {
         });
     }
 
-    private String getSpotifyMusicURI(String artists_names, String genre) {
+    private void getSpotifyMusicURI(String artists_names, String genre) {
+
         String[] artists = artists_names.split(";_;");
 
         if(artists.length > 0){
             Random r = new Random();
             int bandIdx = r.nextInt(artists.length);
-
-            String artistSongURI = mSpotifyCallback.getTopSongForArtist(artists[bandIdx]);
-            if(artistSongURI != null){
-                return artistSongURI;
-            }
+            mController.getTopSongForArtist(artists[bandIdx]);
         }
         //TODO search for genre
-        return mSpotifyCallback.getTopSongForArtist(genre);
-
+       // return mSpotifyCallback.getTopSongForArtist(genre);
     }
 
 

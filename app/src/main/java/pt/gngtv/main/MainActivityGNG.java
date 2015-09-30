@@ -44,11 +44,13 @@ import pt.gngtv.R;
 import pt.gngtv.main.controller.MainController;
 import pt.gngtv.main.controller.MainControllerInterface;
 import pt.gngtv.main.service.GNGWebService;
+import pt.gngtv.main.service.SpotifyWebService;
 import pt.gngtv.main.service.WebService;
 import pt.gngtv.main.spotify.SpotifyBaseActivity;
 import pt.gngtv.model.Cover;
 import pt.gngtv.model.GNGFirebaseModel;
 import pt.gngtv.model.Model;
+import pt.gngtv.model.SpotifyArtistItem;
 import pt.gngtv.model.Wishlist;
 import pt.gngtv.utils.TypeFaceSpan;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -57,7 +59,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by joseaguiar on 25/09/15.
  */
 public class MainActivityGNG extends SpotifyBaseActivity implements MainControllerInterface {
+
     private WebService<GNGWebService> service;
+
     private MainController mController = null;
     private CountDownTimer timer;
     private String accessToken;
@@ -85,6 +89,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         ButterKnife.bind(this);
         service = new WebService<>(((GNGTVApplication) getApplication()).restAdapter.create(GNGWebService.class));
 
+
         if (mController == null) {
             mController = new MainController(this);
             mController.registerFirebaseListener();
@@ -109,6 +114,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     public WebService getService(){
         return service;
     }
+
 
     @Override
     public void setContent(List<Wishlist> data) {
@@ -281,4 +287,6 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         spanName.setSpan(new RelativeSizeSpan(1.2f), welcomeLegnth + 1, spanName.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         return spanName;
     }
+
+
 }

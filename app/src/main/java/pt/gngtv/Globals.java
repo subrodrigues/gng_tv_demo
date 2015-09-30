@@ -11,6 +11,8 @@ public class Globals {
 
     public final static String HOST_NAME = "http://gng.production.thingpink.info";
 
+    public final static String SPOTIFY_HOST_NAME = "https://api.spotify.com/v1";
+
     public static final long CONNECTION_TIMEOUT = 10000;
     public static final long SOCKET_TIMEOUT = 10000;
 
