@@ -15,6 +15,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,6 +26,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.nineoldandroids.animation.Animator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import pt.gngtv.Animations;
 import pt.gngtv.GNGTVApplication;
 import pt.gngtv.Globals;
 import pt.gngtv.R;
@@ -69,6 +74,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     @Bind(R.id.songInfo) RelativeLayout layoutSongInfo;
     @Bind(R.id.triangle) View shapeTriangle;
     @Bind(R.id.leviLogo) ImageView imgLeviLogo;
+
+    @Bind(R.id.priceContainer) RelativeLayout priceContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,7 +131,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
                 public void onTick(long millisUntilFinished) {
                     position = position < data.size() - 1 ? ++position : 0; //Go ahead through all model positions. If it reaches the end then restart over again.
-                    Model product = data.get(position);
+                    final Model product = data.get(position);
                     if(product.getPrice() == 0) product.setPrice(ThreadLocalRandom.current().nextInt(55, 150)); //Setting random price for demonstration purposes
 
                     if(product.getCover().getImage() != null) {
@@ -142,9 +149,40 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                         imgProductPicture.setImageDrawable(new ColorDrawable(Color.rgb(rdm.nextInt(256), rdm.nextInt(256), rdm.nextInt(256))));
                     }
 
-                    txtProductDescription.setText(product.getName());
-                    txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
-                    txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
+                    YoYo.with(new Animations.SlideOutLeftNoTransparencyAnimator())
+                            .duration(800)
+                            .withListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+
+                                    txtProductDescription.setText(product.getName());
+                                    txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
+                                    txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
+
+                                    YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
+                                            .duration(700)
+                                            .interpolate(new DecelerateInterpolator())
+                                            .playOn(priceContainer);
+
+                                }
+
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+
+                                }
+                            })
+                            .playOn(priceContainer);
+
 
                     if(data.size() == 1) cancel();
                 }
@@ -203,6 +241,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
             model2.setCover(cover2);
             model2.setPrice(117);
             data.add(model2);
+
             setModelsContent(data);
         }
     }
