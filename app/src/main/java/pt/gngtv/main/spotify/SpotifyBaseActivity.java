@@ -207,13 +207,18 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
 
         if(this.mCallback != null) {
 
-            if (eventType == EventType.TRACK_START) {
+            if(eventType == EventType.BECAME_ACTIVE){
+                currentTrack = -1;
+            }
+            else if (eventType == EventType.TRACK_START) {
                 this.mCallback.play(spotifyTracks.get(currentTrack));
 
-            } else if (eventType == EventType.TRACK_END || eventType == EventType.PAUSE) {
+            }
+            else if (eventType == EventType.TRACK_END || eventType == EventType.PAUSE) {
                 this.mCallback.stop();
 
-            } else if (eventType == EventType.TRACK_CHANGED) {
+            }
+            else if (eventType == EventType.TRACK_CHANGED) {
                 currentTrack++;
             }
         }

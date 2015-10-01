@@ -296,11 +296,12 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
     @Override
     public void stop() {
-
+        layoutSongInfo.setVisibility(View.GONE);
     }
 
     @Override
     public void play(SpotifyTrack track) {
+
         layoutSongInfo.setVisibility(View.VISIBLE);
         txtPlayingSongTitle.setText(track.getName());
         txtPlayingSongAlbumTitle.setText(track.getArtists().get(0).getName());
