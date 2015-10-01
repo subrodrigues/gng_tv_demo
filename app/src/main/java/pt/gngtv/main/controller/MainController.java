@@ -126,8 +126,6 @@ public class MainController {
             int bandIdx = r.nextInt(artists.length);
             mController.getTopSongForArtist(artists[bandIdx]);
         }
-        //TODO search for genre
-       // return mSpotifyCallback.getTopSongForArtist(genre);
     }
 
 

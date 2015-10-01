@@ -41,12 +41,15 @@ import pt.gngtv.GNGTVApplication;
 import pt.gngtv.R;
 import pt.gngtv.main.controller.MainController;
 import pt.gngtv.main.controller.MainControllerInterface;
+import pt.gngtv.main.controller.SpotifyPlayerInterface;
 import pt.gngtv.main.service.GNGWebService;
 import pt.gngtv.main.service.WebService;
 import pt.gngtv.main.spotify.SpotifyBaseActivity;
 import pt.gngtv.model.Cover;
 import pt.gngtv.model.GNGFirebaseModel;
 import pt.gngtv.model.Model;
+import pt.gngtv.model.SpotifyTrack;
+import pt.gngtv.model.SpotifyTracksModel;
 import pt.gngtv.model.Wishlist;
 import pt.gngtv.utils.TypeFaceSpan;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -54,7 +57,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Created by joseaguiar on 25/09/15.
  */
-public class MainActivityGNG extends SpotifyBaseActivity implements MainControllerInterface {
+public class MainActivityGNG extends SpotifyBaseActivity implements MainControllerInterface, SpotifyPlayerInterface {
 
     private WebService<GNGWebService> service;
 
@@ -90,6 +93,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
             mController = new MainController(this);
             mController.registerFirebaseListener();
         }
+
+        setActivityInterface(this);
 
         showViews(false);
     }
@@ -214,7 +219,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         RelativeLayout.LayoutParams txtProdDiscountParams = (RelativeLayout.LayoutParams) txtProductDiscount.getLayoutParams();
         txtProdDiscountParams.width = show ? getResources().getDimensionPixelOffset(R.dimen.label_discount_width) : 0;
         txtProductDiscount.setLayoutParams(txtProdDiscountParams);
-        layoutSongInfo.setVisibility(visibility);
+       // layoutSongInfo.setVisibility(visibility);
         imgLeviLogo.setVisibility(show ? View.GONE : View.VISIBLE);
         txtWhishlist.setVisibility(visibility);
 
@@ -248,7 +253,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         }
     }
 
-    private void setUserName(String userName) {
+    public void setUserName(String userName) {
         if(!TextUtils.isEmpty(userName)) {
             txtUsername.setText(formatUserName(getString(R.string.welcome, userName)));
         }else {
@@ -284,5 +289,24 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         return spanName;
     }
 
+    @Override
+    public void setCurrentPlayingTrack(SpotifyTrack track) {
 
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public void play(SpotifyTrack track) {
+        layoutSongInfo.setVisibility(View.VISIBLE);
+        txtPlayingSongTitle.setText(track.getName());
+        txtPlayingSongAlbumTitle.setText(track.getArtists().get(0).getName());
+
+        if(track.getAlbum().getAlbumImage() != null){
+            Glide.with(MainActivityGNG.this).load(track.getAlbum().getAlbumImage().getUrl()).into(imgAlbumCover);
+        }
+    }
 }

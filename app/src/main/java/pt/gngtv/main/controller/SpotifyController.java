@@ -47,6 +47,7 @@ public class SpotifyController {
                     }
                     else{
                         Log.e("Spotify", "getTopSongForArtist error");
+                        mCallback.spotifyError();
                     }
                 }
             }
@@ -54,6 +55,10 @@ public class SpotifyController {
             @Override
             public void failure(RetrofitError error) {
                 Log.e("Spotify", "getTopSongForArtist RetrofitError: " + error.toString());
+
+                if (mActivity != null && !mActivity.isFinishing() && mCallback != null) {
+                    mCallback.spotifyError();
+                }
             }
         });
     }
@@ -63,13 +68,21 @@ public class SpotifyController {
         spotifyService.getService().getArtistTopTracks(artist.getId(), "PT", new Callback<SpotifyTracksModel<List<SpotifyTrack>>>() {
 
             @Override
-            public void success(SpotifyTracksModel<List<SpotifyTrack>> listSpotifyTracksModel, Response response) {
-                int x = 1;
+            public void success(SpotifyTracksModel<List<SpotifyTrack>> tracks, Response response) {
+
+                if (mActivity != null && !mActivity.isFinishing() && mCallback != null) {
+                    mCallback.setTracks(tracks.getTracks());
+                }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                int x = 1;
+
+                Log.e("Spotify", "getTopSongForArtist RetrofitError: " + error.toString());
+
+                if (mActivity != null && !mActivity.isFinishing() && mCallback != null) {
+                    mCallback.spotifyError();
+                }
             }
         });
     }

@@ -21,11 +21,16 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.Spotify;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import pt.gngtv.main.controller.MainController;
 import pt.gngtv.main.controller.SpotifyControllerInterface;
+import pt.gngtv.main.controller.SpotifyPlayerInterface;
 import pt.gngtv.model.SpotifyArtist;
+import pt.gngtv.model.SpotifyTrack;
+import pt.gngtv.model.SpotifyTracksModel;
 
 /**
  * Created by jcalado on 29/09/15.
@@ -36,8 +41,7 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
     private static final String CLIENT_ID = "b98bea9caabf47d59dd2245e1ef764f6";
     // TODO: Replace with your redirect URI
     private static final String REDIRECT_URI = "pt-spotifydemo://callback";
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final String TEST_SONG_URI = "spotify:track:6JEK0CvvjDjjMUBFoXShNZ";
+
 
     /**
      * Request code that will be passed together with authentication result to the onAuthenticationResult
@@ -46,6 +50,14 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
     private Player mPlayer;
     private BroadcastReceiver mNetworkStateReceiver;
     private PlayerState mCurrentPlayerState;
+    private List<SpotifyTrack> spotifyTracks;
+    private int currentTrack = 0;
+
+    private SpotifyPlayerInterface mCallback;
+
+    protected void setActivityInterface(SpotifyPlayerInterface mCallback){
+        this.mCallback = mCallback;
+    }
 
     private void openLoginWindow() {
         final AuthenticationRequest request = new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI)
@@ -159,7 +171,8 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
                     mPlayer.addPlayerNotificationCallback(SpotifyBaseActivity.this);
                     mPlayer.addConnectionStateCallback(SpotifyBaseActivity.this);
                     // Trigger UI refresh
-                    updateButtons();
+                    requestUserData();
+                 //   updateButtons();
                 }
 
                 @Override
@@ -183,24 +196,27 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
         }
     }
 
-    private void updateButtons() {
-        boolean loggedIn = isLoggedIn();
-        /*
-        // Login button should be the inverse of the logged in state
-        Button loginButton = (Button) findViewById(R.id.login_button);
-        loginButton.setText(loggedIn ? R.string.logout_button_label : R.string.login_button_label);
+    private void requestUserData(){
 
-        // Set enabled for all widgets which depend on initialized state
-        for (int id : REQUIRES_INITIALIZED_STATE) {
-            findViewById(id).setEnabled(loggedIn);
+        if(spotifyTracks != null){
+            playSongs(spotifyTracks);
         }
+    }
 
-        // Same goes for the playing state
-        boolean playing = loggedIn && mCurrentPlayerState.playing;
-        for (int id : REQUIRES_PLAYING_STATE) {
-            findViewById(id).setEnabled(playing);
+    private void updateButtons(EventType eventType) {
+
+        if(this.mCallback != null) {
+
+            if (eventType == EventType.TRACK_START) {
+                this.mCallback.play(spotifyTracks.get(currentTrack));
+
+            } else if (eventType == EventType.TRACK_END || eventType == EventType.PAUSE) {
+                this.mCallback.stop();
+
+            } else if (eventType == EventType.TRACK_CHANGED) {
+                currentTrack++;
+            }
         }
-        */
     }
 
     private boolean isLoggedIn() {
@@ -216,13 +232,13 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
     @Override
     public void onLoggedIn() {
         logStatus("Login complete");
-        updateButtons();
+        updateButtons(EventType.BECAME_ACTIVE);
     }
 
     @Override
     public void onLoggedOut() {
         logStatus("Logout complete");
-        updateButtons();
+        updateButtons(EventType.END_OF_CONTEXT);
     }
 
     @Override
@@ -248,7 +264,7 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
         String eventName = eventType.name().toLowerCase(Locale.ENGLISH).replaceAll("_", " ");
         logStatus("Player event: " + eventName);
         mCurrentPlayerState = playerState;
-        updateButtons();
+        updateButtons(eventType);
     }
 
     @Override
@@ -277,19 +293,42 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
         }
     }
 
+    public void playSongs(List<SpotifyTrack> tracks) {
+
+        this.spotifyTracks = tracks;
+
+        if(mPlayer != null && mPlayer.isInitialized() && mPlayer.isLoggedIn()){
+
+            List<String> tracksUris = new ArrayList<>();
+            for(SpotifyTrack track : tracks)
+                tracksUris.add(track.getUri());
+
+            currentTrack = 0;
+            mPlayer.play(tracksUris);
+
+            logStatus("Play songs with URIs: " + tracksUris.toString());
+        } else {
+
+            if(mPlayer == null){
+                logStatus("Player not ready to play a song. Player is null");
+
+            } else {
+                logStatus("Player not ready to play a song." + "Initialized:" + mPlayer.isInitialized() + "Initialized:" + mPlayer.isLoggedIn());
+
+            }
+        }
+    }
 
     @Override
-    public void setArtistList(List<SpotifyArtist> artists) {
+    public void setTracks(List<SpotifyTrack> tracks) {
 
-        if(artists != null && artists.size() > 0){
-            Log.e("Spotify", artists.toString());
+        if(tracks != null && tracks.size() > 0)
+            playSongs(tracks);
+    }
 
-            SpotifyArtist item = artists.get(0);
+    @Override
+    public void spotifyError() {
 
-        }
-        else{
-            Log.e("Spotify", "Pesquisa sem resultados");
-        }
     }
 
 }
