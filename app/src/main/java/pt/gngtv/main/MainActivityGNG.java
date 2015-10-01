@@ -232,21 +232,21 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
             Cover cover = new Cover();
             cover.setImage("http://lsco.scene7.com/is/image/lsco/Levi/clothing/195330001-front-pdp.jpg?$1330x800main$");
             model.setCover(cover);
-            model.setPrice(98);
+            model.setPrice(98.5f);
             data.add(model);
             Model model1 = new Model();
             model1.setName("Otis beanie");
             Cover cover1 = new Cover();
             cover1.setImage("http://lsco.scene7.com/is/image/lsco/Levi/accessories/771380903-front-pdp.jpg?$1330x800main$");
             model1.setCover(cover1);
-            model1.setPrice(71);
+            model1.setPrice(71.9f);
             data.add(model1);
             Model model2 = new Model();
             model2.setName("Stock workshirt");
             Cover cover2 = new Cover();
             cover2.setImage("http://lsco.scene7.com/is/image/lsco/Levi/clothing/658220091-2015-spring-front-pdp.jpg?$1330x800main$");
             model2.setCover(cover2);
-            model2.setPrice(117);
+            model2.setPrice(117.95f);
             data.add(model2);
 
             setModelsContent(data);
