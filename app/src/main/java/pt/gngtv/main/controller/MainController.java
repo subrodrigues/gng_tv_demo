@@ -31,6 +31,7 @@ public class MainController {
     private MainControllerInterface mCallback;
     private SpotifyController mController;
     private Firebase gngFirebaseRoot;
+    private GNGFirebaseModel userInfo;
 
     public MainController(MainActivityGNG activity) {
         this.mActivity = activity;
@@ -96,7 +97,7 @@ public class MainController {
             public void onDataChange(DataSnapshot snapshot) {
                 Log.i("GNGTV", "Data changed");
                 try {
-                    GNGFirebaseModel userInfo = snapshot.getValue(GNGFirebaseModel.class);
+                    userInfo = snapshot.getValue(GNGFirebaseModel.class);
                     Log.i("GNGTV", "There is a user: " + Boolean.toString(userInfo != null));
                     if (userInfo != null) {
                         mCallback.setUserInfo(userInfo);
@@ -124,9 +125,14 @@ public class MainController {
         if(artists.length > 0){
             Random r = new Random();
             int bandIdx = r.nextInt(artists.length);
+            Log.i("Spotify", "getSpotifyMusicURI: " + artists[bandIdx]);
             mController.getTopSongForArtist(artists[bandIdx]);
         }
     }
 
+    public void loadSpotifyData(){
 
+        if(userInfo != null)
+            getSpotifyMusicURI(userInfo.artists_names, userInfo.favorite_genre);
+    }
 }

@@ -19,6 +19,7 @@
     <dimen name="product_description_label_padding_left">10dp</dimen>
     <dimen name="product_description_label_padding_right">20dp</dimen>
 
+    <dimen name="playing_song_cover_width">70dp</dimen>
     <dimen name="playing_song_icon_margin_right">30dp</dimen>
     <dimen name="playing_song_title_text_size">20sp</dimen>
     <dimen name="text_strike_stroke_width">2dp</dimen>

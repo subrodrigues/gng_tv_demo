@@ -121,4 +121,11 @@ public class SpotifyTrack {
     public void setUri(String uri) {
         this.uri = uri;
     }
+
+    @Override
+    public String toString() {
+        return "SpotifyTrack{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import pt.gngtv.main.MainActivityGNG;
 import pt.gngtv.main.controller.MainController;
 import pt.gngtv.main.controller.SpotifyControllerInterface;
 import pt.gngtv.main.controller.SpotifyPlayerInterface;
@@ -51,11 +52,13 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
     private BroadcastReceiver mNetworkStateReceiver;
     private PlayerState mCurrentPlayerState;
     private List<SpotifyTrack> spotifyTracks;
-    private int currentTrack = 0;
+    private int currentTrack = -1;
 
     private SpotifyPlayerInterface mCallback;
+    private MainActivityGNG mainActivity;
 
-    protected void setActivityInterface(SpotifyPlayerInterface mCallback){
+    protected void setActivityInterface(MainActivityGNG mainActivity, SpotifyPlayerInterface mCallback){
+        this.mainActivity = mainActivity;
         this.mCallback = mCallback;
     }
 
@@ -205,6 +208,8 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
 
     private void updateButtons(EventType eventType) {
 
+        Log.i("Spotify", "updateButtons: " + eventType.toString());
+
         if(this.mCallback != null) {
 
             if(eventType == EventType.BECAME_ACTIVE){
@@ -219,7 +224,13 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
 
             }
             else if (eventType == EventType.TRACK_CHANGED) {
-                currentTrack++;
+
+                if(mainActivity != null && mainActivity.hasUser())
+                    currentTrack++;
+
+                else if(mPlayer != null)
+                    mPlayer.pause();
+
             }
         }
     }
@@ -238,6 +249,7 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
     public void onLoggedIn() {
         logStatus("Login complete");
         updateButtons(EventType.BECAME_ACTIVE);
+        requestUserData();
     }
 
     @Override
@@ -308,17 +320,19 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
             for(SpotifyTrack track : tracks)
                 tracksUris.add(track.getUri());
 
-            currentTrack = 0;
+            currentTrack = -1;
             mPlayer.play(tracksUris);
 
-            logStatus("Play songs with URIs: " + tracksUris.toString());
+            Log.i("Spotify", "playSongs: " + tracks.toString());
+
+           // logStatus("Play songs with URIs: " + tracksUris.toString());
         } else {
 
             if(mPlayer == null){
                 logStatus("Player not ready to play a song. Player is null");
 
             } else {
-                logStatus("Player not ready to play a song." + "Initialized:" + mPlayer.isInitialized() + "Initialized:" + mPlayer.isLoggedIn());
+                logStatus("Player not ready to play a song." + " Initialized:" + mPlayer.isInitialized() + " LoggedIn:" + mPlayer.isLoggedIn());
 
             }
         }

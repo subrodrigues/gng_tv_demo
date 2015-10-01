@@ -64,6 +64,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     private MainController mController = null;
     private CountDownTimer timer;
     private String accessToken;
+    private boolean hasUser = false;
 
     @Bind(R.id.discountLabel) TextView txtProductDiscount;
     @Bind(R.id.priceLabel) TextView txtProductPrice;
@@ -94,7 +95,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
             mController.registerFirebaseListener();
         }
 
-        setActivityInterface(this);
+        setActivityInterface(this, this);
 
         showViews(false);
     }
@@ -215,6 +216,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
     private void showViews(boolean show) {
         int visibility = show ? View.VISIBLE : View.GONE;
+        hasUser = show;
         shapeTriangle.setVisibility(visibility);
         RelativeLayout.LayoutParams txtProdDiscountParams = (RelativeLayout.LayoutParams) txtProductDiscount.getLayoutParams();
         txtProdDiscountParams.width = show ? getResources().getDimensionPixelOffset(R.dimen.label_discount_width) : 0;
@@ -251,6 +253,10 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
             setModelsContent(data);
         }
+
+      /*  else{
+            mController.loadSpotifyData();
+        }*/
     }
 
     public void setUserName(String userName) {
@@ -307,7 +313,11 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         txtPlayingSongAlbumTitle.setText(track.getArtists().get(0).getName());
 
         if(track.getAlbum().getAlbumImage() != null){
-            Glide.with(MainActivityGNG.this).load(track.getAlbum().getAlbumImage().getUrl()).into(imgAlbumCover);
+            Glide.with(MainActivityGNG.this).load(track.getAlbum().getAlbumImage().getUrl()).centerCrop().into(imgAlbumCover);
         }
+    }
+
+    public boolean hasUser(){
+        return hasUser;
     }
 }
