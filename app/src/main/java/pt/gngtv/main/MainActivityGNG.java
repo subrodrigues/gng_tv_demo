@@ -89,7 +89,6 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         ButterKnife.bind(this);
         service = new WebService<>(((GNGTVApplication) getApplication()).restAdapter.create(GNGWebService.class));
 
-
         if (mController == null) {
             mController = new MainController(this);
             mController.registerFirebaseListener();
@@ -140,25 +139,11 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                 public void onTick(long millisUntilFinished) {
                     position = position < data.size() - 1 ? ++position : 0; //Go ahead through all model positions. If it reaches the end then restart over again.
                     final Model product = data.get(position);
+
                     if(product.getPrice() == 0) product.setPrice(ThreadLocalRandom.current().nextInt(55, 150)); //Setting random price for demonstration purposes
 
-                    if(product.getCover().getImage() != null) {
-                        Glide.with(MainActivityGNG.this).load(product.getCover().getImage()).asBitmap().into(new SimpleTarget<Bitmap>(1080, 1080) {
-                            @Override
-                            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-
-                                if (isFinishing()) return;
-
-                                imgProductPicture.setImageDrawable(new BitmapDrawable(getResources(), resource));
-                            }
-                        });
-                    }else {
-                        Random rdm = new Random();
-                        imgProductPicture.setImageDrawable(new ColorDrawable(Color.rgb(rdm.nextInt(256), rdm.nextInt(256), rdm.nextInt(256))));
-                    }
-
                     YoYo.with(new Animations.SlideOutLeftNoTransparencyAnimator())
-                            .duration(800)
+                            .duration(700)
                             .withListener(new Animator.AnimatorListener() {
                                 @Override
                                 public void onAnimationStart(Animator animation) {
@@ -168,14 +153,66 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
 
-                                    txtProductDescription.setText(product.getName());
-                                    txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
-                                    txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
+                                }
 
-                                    YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
-                                            .duration(700)
-                                            .interpolate(new DecelerateInterpolator())
-                                            .playOn(priceContainer);
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+
+                                }
+                            })
+                            .playOn(txtProductDescription);
+
+                    YoYo.with(new Animations.SlideOutLeftNoTransparencyAnimator())
+                            .duration(1000)
+                            .withListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    if(product.getCover().getImage() != null) {
+                                        Glide.with(MainActivityGNG.this).load(product.getCover().getImage()).asBitmap().into(new SimpleTarget<Bitmap>(1080, 1080) {
+                                            @Override
+                                            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+
+                                                if (isFinishing()) return;
+
+                                                imgProductPicture.setImageDrawable(new BitmapDrawable(getResources(), resource));
+
+                                                txtProductDescription.setText(product.getName());
+                                                YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
+                                                        .duration(1000)
+                                                        .playOn(txtProductDescription);
+
+                                                txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
+                                                txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
+                                                YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
+                                                        .duration(1300)
+                                                        .playOn(priceContainer);
+                                            }
+                                        });
+                                    }else {
+                                        Random rdm = new Random();
+                                        imgProductPicture.setImageDrawable(new ColorDrawable(Color.rgb(rdm.nextInt(256), rdm.nextInt(256), rdm.nextInt(256))));
+
+                                        YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
+                                                .duration(800)
+                                                .playOn(txtProductDescription);
+
+                                        txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
+                                        txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
+
+                                        YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
+                                                .duration(1000)
+                                                .playOn(priceContainer);
+                                    }
 
                                 }
 
@@ -190,7 +227,6 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                                 }
                             })
                             .playOn(priceContainer);
-
 
                     if(data.size() == 1) cancel();
                 }
