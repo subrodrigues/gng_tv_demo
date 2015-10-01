@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class SpotifyAlbum {
 
-    @SerializedName("album_name")
+    @SerializedName("album_type")
     private String albumType;
     private String href;
     private String id;
