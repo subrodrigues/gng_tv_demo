@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 
 import pt.gngtv.main.controller.SpotifyControllerInterface;
-import pt.gngtv.model.SpotifyArtistItem;
+import pt.gngtv.model.SpotifyArtist;
 
 /**
  * Created by jcalado on 29/09/15.
@@ -279,12 +279,12 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
 
 
     @Override
-    public void setArtistList(List<SpotifyArtistItem> artists) {
+    public void setArtistList(List<SpotifyArtist> artists) {
 
         if(artists != null && artists.size() > 0){
             Log.e("Spotify", artists.toString());
 
-            SpotifyArtistItem item = artists.get(0);
+            SpotifyArtist item = artists.get(0);
 
         }
         else{

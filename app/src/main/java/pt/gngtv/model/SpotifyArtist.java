@@ -3,13 +3,14 @@ package pt.gngtv.model;
 /**
  * Created by joseaguiar on 30/09/15.
  */
-public class SpotifyArtistItem {
+public class SpotifyArtist {
 
     private String id;
     private String name;
-    private int populatiry;
+    private int popularity;
     private String type;
     private String uri;
+    private String href;
 
     public String getId() {
         return id;
@@ -27,12 +28,12 @@ public class SpotifyArtistItem {
         this.name = name;
     }
 
-    public int getPopulatiry() {
-        return populatiry;
+    public int getPopularity() {
+        return popularity;
     }
 
-    public void setPopulatiry(int populatiry) {
-        this.populatiry = populatiry;
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
     }
 
     public String getType() {

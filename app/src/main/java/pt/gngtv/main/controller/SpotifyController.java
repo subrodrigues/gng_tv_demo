@@ -6,7 +6,7 @@ import pt.gngtv.GNGTVApplication;
 import pt.gngtv.main.service.SpotifyWebService;
 import pt.gngtv.main.service.WebService;
 import pt.gngtv.main.spotify.SpotifyBaseActivity;
-import pt.gngtv.model.SpotifyArtistItem;
+import pt.gngtv.model.SpotifyArtist;
 import pt.gngtv.model.SpotifyArtistsModel;
 import pt.gngtv.model.SpotifyItemsModel;
 import retrofit.Callback;
@@ -30,10 +30,10 @@ public class SpotifyController {
 
     public void getTopSongForArtist(String artistName) {
 
-        spotifyService.getService().searchArtist(artistName, "artist", new Callback<SpotifyArtistsModel<SpotifyItemsModel<List<SpotifyArtistItem>>>>() {
+        spotifyService.getService().searchArtist(artistName, "artist", new Callback<SpotifyArtistsModel<SpotifyItemsModel<List<SpotifyArtist>>>>() {
 
             @Override
-            public void success(SpotifyArtistsModel<SpotifyItemsModel<List<SpotifyArtistItem>>> spotifyArtistsModelSpotifyArtistsModel, Response response) {
+            public void success(SpotifyArtistsModel<SpotifyItemsModel<List<SpotifyArtist>>> spotifyArtistsModelSpotifyArtistsModel, Response response) {
 
                 if (mActivity != null && !mActivity.isFinishing() && mCallback != null) {
                    // mCallback.setArtistList(spotifyArtistsModelSpotifyArtistsModel.getArtists().getItems());
