@@ -296,9 +296,9 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     }
 
     public void setUserName(String userName) {
-        if(!TextUtils.isEmpty(userName)) {
+        if(txtUsername != null && !TextUtils.isEmpty(userName)) {
             txtUsername.setText(formatUserName(getString(R.string.welcome, userName)));
-        }else {
+        }else if(txtUsername != null){
             txtUsername.setText(formatUserName(getString(R.string.welcome_nouser)));
         }
     }

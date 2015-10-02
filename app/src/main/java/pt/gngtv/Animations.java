@@ -13,7 +13,7 @@ import com.nineoldandroids.animation.ObjectAnimator;
  */
 public interface Animations {
 
-  /*  class BounceSlightyDownAnimator extends BaseViewAnimator {
+   /* class BounceSlightyDownAnimator extends BaseViewAnimator {
         private Context context;
 
         public BounceSlightyDownAnimator(Context context) {
@@ -23,10 +23,10 @@ public interface Animations {
         public void prepare(View target) {
             this.getAnimatorAgent().playTogether(
                     new Animator[]{
-                            ObjectAnimator.ofFloat(target, "translationY", new float[]{(float)(context.getResources().getDimensionPixelSize(R.dimen.half_action_bar_height_material)), 30.0F, -10.0F, 0.0F})});
+                            ObjectAnimator.ofFloat(target, "translationY", new float[]{(float)100, 30.0F, -10.0F, 0.0F})});
         }
     }
-*/
+
     class BounceSlightyUpAnimator extends BaseViewAnimator {
         private Context context;
 
@@ -37,10 +37,10 @@ public interface Animations {
         public void prepare(View target) {
             this.getAnimatorAgent().playTogether(
                     new Animator[]{
-                            ObjectAnimator.ofFloat(target, "translationY", new float[]{(float)(context.getResources().getDimensionPixelSize(R.dimen.abc_action_bar_default_height_material)), -30.0F, 10.0F, 0.0F})});
+                            ObjectAnimator.ofFloat(target, "translationY", new float[]{(float)(100, -30.0F, 10.0F, 0.0F})});
         }
     }
-
+*/
     class SlideOutLeftNoTransparencyAnimator extends BaseViewAnimator {
         public SlideOutLeftNoTransparencyAnimator() {
         }
