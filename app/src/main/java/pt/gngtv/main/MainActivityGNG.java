@@ -140,7 +140,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                     position = position < data.size() - 1 ? ++position : 0; //Go ahead through all model positions. If it reaches the end then restart over again.
                     final Model product = data.get(position);
 
-                    if(product.getPrice() == 0) product.setPrice(ThreadLocalRandom.current().nextInt(55, 150)); //Setting random price for demonstration purposes
+                    product.setPrice(ThreadLocalRandom.current().nextInt(55, 150)); //Setting random price for demonstration purposes
 
                     YoYo.with(new Animations.SlideOutLeftNoTransparencyAnimator())
                             .duration(700)
@@ -203,14 +203,14 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                                         imgProductPicture.setImageDrawable(new ColorDrawable(Color.rgb(rdm.nextInt(256), rdm.nextInt(256), rdm.nextInt(256))));
 
                                         YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
-                                                .duration(800)
+                                                .duration(1000)
                                                 .playOn(txtProductDescription);
 
                                         txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
                                         txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
 
                                         YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
-                                                .duration(1000)
+                                                .duration(1300)
                                                 .playOn(priceContainer);
                                     }
 
