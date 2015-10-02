@@ -192,8 +192,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                                                         .duration(1000)
                                                         .playOn(txtProductDescription);
 
-                                                txtProductPrice.setText(String.format("%s %s", Utils.formatCurrency(product.getPrice()), "EUR"));
-                                                txtProductDiscount.setText(String.format("%s %s", Utils.formatCurrency((product.getPrice() - (product.getPrice() * 0.2))), "EUR"));
+                                                txtProductPrice.setText(String.format("%s %s", Utils.formatCurrency(product.getPrice()), "€"));
+                                                txtProductDiscount.setText(String.format("%s %s", Utils.formatCurrency((product.getPrice() - (product.getPrice() * 0.2))), "€"));
                                                         // txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
                                                         //txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
                                                         YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
