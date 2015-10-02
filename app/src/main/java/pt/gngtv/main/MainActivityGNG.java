@@ -238,7 +238,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
     @Override
     public void setUserInfo(GNGFirebaseModel userInfo) {
-        Toast.makeText(this, "user: " + userInfo.user_name, Toast.LENGTH_LONG).show();
+       // Toast.makeText(this, "user: " + userInfo.user_name, Toast.LENGTH_LONG).show();
         if(TextUtils.isEmpty(userInfo.access_token) || TextUtils.isEmpty(userInfo.artists_names) || TextUtils.isEmpty(userInfo.favorite_genre) || TextUtils.isEmpty(userInfo.profile_url)
                 || TextUtils.isEmpty(userInfo.user_id) || TextUtils.isEmpty(userInfo.user_name)) {
             showViews(false);
