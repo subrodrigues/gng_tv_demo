@@ -22,6 +22,7 @@ import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.Spotify;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -228,8 +229,10 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
                 if(mainActivity != null && mainActivity.hasUser())
                     currentTrack++;
 
-                else if(mPlayer != null)
+                else if(mPlayer != null) {
+                    mPlayer.clearQueue();
                     mPlayer.pause();
+                }
 
             }
         }
@@ -312,6 +315,10 @@ public abstract class SpotifyBaseActivity extends Activity implements PlayerNoti
 
     public void playSongs(List<SpotifyTrack> tracks) {
 
+        if(tracks.size() > 5)
+            tracks = tracks.subList(0, 4);
+
+        Collections.shuffle(tracks);
         this.spotifyTracks = tracks;
 
         if(mPlayer != null && mPlayer.isInitialized() && mPlayer.isLoggedIn()){

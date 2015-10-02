@@ -52,6 +52,7 @@ import pt.gngtv.model.SpotifyTrack;
 import pt.gngtv.model.SpotifyTracksModel;
 import pt.gngtv.model.Wishlist;
 import pt.gngtv.utils.TypeFaceSpan;
+import pt.gngtv.utils.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -191,11 +192,13 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                                                         .duration(1000)
                                                         .playOn(txtProductDescription);
 
-                                                txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
-                                                txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
-                                                YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
-                                                        .duration(1300)
-                                                        .playOn(priceContainer);
+                                                txtProductPrice.setText(String.format("%s %s", Utils.formatCurrency(product.getPrice()), "EUR"));
+                                                txtProductDiscount.setText(String.format("%s %s", Utils.formatCurrency((product.getPrice() - (product.getPrice() * 0.2))), "EUR"));
+                                                        // txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
+                                                        //txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
+                                                        YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
+                                                                .duration(1300)
+                                                                .playOn(priceContainer);
                                             }
                                         });
                                     }else {
