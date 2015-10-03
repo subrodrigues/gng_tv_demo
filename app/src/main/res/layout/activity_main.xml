@@ -109,6 +109,13 @@
             android:layout_centerVertical="true"
             android:background="@drawable/shape_red_triangle"
             android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/moldura_smartv"/>
+
     </RelativeLayout>
 
     <RelativeLayout
