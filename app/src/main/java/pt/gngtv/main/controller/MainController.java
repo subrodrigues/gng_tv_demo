@@ -1,6 +1,8 @@
 package pt.gngtv.main.controller;
 
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -8,14 +10,17 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import pt.gngtv.R;
 import pt.gngtv.main.MainActivityGNG;
 import pt.gngtv.main.service.GNGWebService;
 import pt.gngtv.model.BaseModel;
 import pt.gngtv.model.GNGFirebaseModel;
 import pt.gngtv.model.Model;
+import pt.gngtv.model.SpotifyTrack;
 import pt.gngtv.model.Wishlist;
 import pt.gngtv.utils.Utils;
 import retrofit.Callback;
@@ -102,7 +107,9 @@ public class MainController {
                     if (userInfo != null) {
                         mCallback.setUserInfo(userInfo);
                         //TODO lets make the search
-                        getSpotifyMusicURI(userInfo.artists_names, userInfo.favorite_genre);
+
+                        if(!TextUtils.isEmpty(userInfo.artists_names))
+                            getSpotifyMusicURI(userInfo.artists_names, userInfo.favorite_genre);
                     }
                     //else
                     //mCallback.error???
@@ -120,13 +127,52 @@ public class MainController {
 
     private void getSpotifyMusicURI(String artists_names, String genre) {
 
-        String[] artists = artists_names.split(";_;");
+        final String[] artists = artists_names.split(";_;");
+        final List<Integer> selectedIndex = new ArrayList<>();
+
+        SpotifyControllerInterface spotifyInterface = new SpotifyControllerInterface() {
+
+
+            @Override
+            public void setTracks(List<SpotifyTrack> tracks) {
+
+            }
+
+            @Override
+            public void spotifyError() {
+
+            }
+
+            @Override
+            public void searchNoResuls() {
+
+                if(artists != null && selectedIndex.size() < artists.length) {
+
+                    Random r = new Random();
+                    int bandIdx = r.nextInt(artists.length);
+
+                    while(selectedIndex.contains(bandIdx)) {
+                        bandIdx = r.nextInt(artists.length);
+                    }
+
+                    selectedIndex.add(bandIdx);
+                    mController.getTopSongForArtist(artists[bandIdx], this);
+                }
+
+                else{
+                    if(mActivity != null && !mActivity.isFinishing())
+                        Toast.makeText(mActivity, mActivity.getString(R.string.no_artist_found_for_spotify), Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
 
         if(artists.length > 0){
             Random r = new Random();
             int bandIdx = r.nextInt(artists.length);
+            selectedIndex.add(bandIdx);
             Log.i("Spotify", "getSpotifyMusicURI: " + artists[bandIdx]);
-            mController.getTopSongForArtist(artists[bandIdx]);
+            mController.getTopSongForArtist(artists[bandIdx], spotifyInterface);
         }
     }
 
@@ -135,4 +181,6 @@ public class MainController {
         if(userInfo != null)
             getSpotifyMusicURI(userInfo.artists_names, userInfo.favorite_genre);
     }
+
+
 }

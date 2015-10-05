@@ -196,7 +196,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                                                         .playOn(txtProductDescription);
 
                                                 txtProductPrice.setText(String.format("%s %s", Utils.formatCurrency(product.getPrice()), "€"));
-                                                txtProductDiscount.setText(String.format("%s %s", Utils.formatCurrency((product.getPrice() - (product.getPrice() * 0.2))), "€"));
+                                                txtProductDiscount.setText(String.format("%s %s", Utils.formatCurrency((product.getPrice() + (product.getPrice() * 0.2))), "€"));
                                                         // txtProductPrice.setText(getString(R.string.price_label, String.valueOf(product.getPrice())));
                                                         //txtProductDiscount.setText(getString(R.string.price_label, String.valueOf(product.getPrice() - (product.getPrice() * 0.2)))); // 20% discount of the original price for demonstration purpose
                                                         YoYo.with(new Animations.SlideInLeftNoTransparencyAnimator())
@@ -264,7 +264,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         txtProdDiscountParams.width = show ? getResources().getDimensionPixelOffset(R.dimen.label_discount_width) : 0;
         txtProductDiscount.setLayoutParams(txtProdDiscountParams);
        // layoutSongInfo.setVisibility(visibility);
-    //    imgLeviLogo.setVisibility(show ? View.GONE : View.VISIBLE);
+        imgLeviLogo.setVisibility(show ? View.GONE : View.VISIBLE);
 
         if(!show) {
             /** Show some mock data. */
@@ -363,5 +363,10 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
     public boolean hasUser(){
         return hasUser;
+    }
+
+    @Override
+    public void searchNoResuls() {
+
     }
 }

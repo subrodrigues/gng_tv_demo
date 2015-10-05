@@ -32,7 +32,7 @@ public class SpotifyController {
         this.spotifyService = new WebService<>(((GNGTVApplication) mActivity.getApplication()).spotifyAdapter.create(SpotifyWebService.class));
     }
 
-    public void getTopSongForArtist(String artistName) {
+    public void getTopSongForArtist(String artistName, final SpotifyControllerInterface queryCallback) {
 
         Log.d("Spotify", "getTopSongForArtist: " + artistName);
 
@@ -51,6 +51,7 @@ public class SpotifyController {
                     else{
                         Log.e("Spotify", "getTopSongForArtist error");
                         mCallback.spotifyError();
+                        queryCallback.searchNoResuls();
                     }
                 }
             }

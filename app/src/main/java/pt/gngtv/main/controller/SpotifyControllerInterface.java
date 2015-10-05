@@ -14,4 +14,6 @@ public interface SpotifyControllerInterface {
     void setTracks(List<SpotifyTrack> tracks);
 
     void spotifyError();
+
+    void searchNoResuls();
 }

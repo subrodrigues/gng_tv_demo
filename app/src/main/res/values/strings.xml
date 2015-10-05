@@ -17,5 +17,7 @@
     <string name="smart_playlist_title">Smart Playlist</string>
     <string name="smart_playlist_message">Music synchronized with the user\'s preference.</string>
 
+    <string name="no_artist_found_for_spotify">Can\'t reproduce any of your artists.</string>
+
 
 </resources>
