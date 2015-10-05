@@ -184,7 +184,7 @@
                 fontPath="@string/roobotoCondensedBold"
                 android:text="@string/users_wishlist_title"
                 android:textAllCaps="true"
-                android:textSize="20sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -213,7 +213,7 @@
                 fontPath="@string/roobotoCondensedBold"
                 android:text="@string/smart_playlist_title"
                 android:textAllCaps="true"
-                android:textSize="20sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -232,8 +232,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#0f0"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <RelativeLayout
                 android:layout_width="match_parent"
