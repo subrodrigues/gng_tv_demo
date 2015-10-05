@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nineoldandroids.animation.Animator;
 
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 
 import butterknife.Bind;
@@ -68,6 +71,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     private String accessToken;
     private boolean hasUser = false;
 
+    private Timer animationTimer;
+
     @Bind(R.id.discountLabel) TextView txtProductDiscount;
     @Bind(R.id.priceLabel) TextView txtProductPrice;
     @Bind(R.id.productDescriptionLabel) TextView txtProductDescription;
@@ -82,6 +87,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
    // @Bind(R.id.triangle) View shapeTriangle;;
 
     @Bind(R.id.priceContainer) RelativeLayout priceContainer;
+    @Bind(R.id.playingIcon) ImageView songMusicIcon;
+    @Bind(R.id.playingLabel) TextView songPlayingLabel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -344,11 +351,23 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
     @Override
     public void stop() {
-        layoutSongInfo.setVisibility(View.GONE);
+        layoutSongInfo.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void play(SpotifyTrack track) {
+
+        YoYo.with(Techniques.FadeIn)
+                .duration(700)
+                .playOn(layoutSongInfo);
+
+        if(animationTimer != null) {
+            animationTimer.cancel();
+            animationTimer.purge();
+        }
+
+        animationTimer = new Timer();
+        animationTimer.schedule(animationTask, 700, 5000);
 
         layoutSongInfo.setVisibility(View.VISIBLE);
         txtPlayingSongTitle.setText(track.getName());
@@ -367,4 +386,27 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     public void searchNoResuls() {
 
     }
+
+    private TimerTask animationTask = new TimerTask() {
+        @Override
+        public void run() {
+
+            runOnUiThread(new TimerTask() {
+                @Override
+                public void run() {
+
+                    YoYo.with(Techniques.FlipInX)
+                            .duration(1400)
+                            .playOn(songMusicIcon);
+
+                    YoYo.with(Techniques.FlipInX)
+                            .duration(1400)
+                            .playOn(songPlayingLabel);
+                }
+            });
+
+
+        }
+    };
+
 }

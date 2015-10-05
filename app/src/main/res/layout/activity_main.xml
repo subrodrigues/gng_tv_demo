@@ -250,15 +250,23 @@
                     android:minHeight="70dp"
                     android:minWidth="70dp" />
 
+                <ImageView
+                    android:id="@+id/playingIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/albumCover"
+                    android:layout_alignBottom="@+id/playingLabel"
+                    android:layout_toEndOf="@+id/albumCover"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icn_playing"/>
+
                 <TextView
                     android:id="@+id/playingLabel"
                     fontPath="@string/roobotoCondensedRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/albumCover"
-                    android:layout_toEndOf="@+id/albumCover"
-                    android:drawablePadding="15dp"
-                    android:drawableStart="@drawable/icn_playing"
+                    android:layout_toRightOf="@+id/playingIcon"
                     android:text="@string/playing_label"
                     android:textAllCaps="true"
                     android:textColor="@color/playing_label_text" />
@@ -269,7 +277,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/albumCover"
-                    android:layout_alignStart="@+id/playingLabel"
+                    android:layout_alignStart="@+id/playingIcon"
                     android:ellipsize="marquee"
                     android:singleLine="true"
                     android:textColor="@android:color/white"
@@ -282,8 +290,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/playingSongTitle"
-                    android:layout_alignStart="@+id/playingLabel"
-                    android:layout_below="@+id/playingLabel"
+                    android:layout_alignStart="@+id/playingIcon"
+                    android:layout_below="@+id/playingIcon"
                     android:layout_marginBottom="-7dp"
                     android:ellipsize="end"
                     android:gravity="start|bottom"
