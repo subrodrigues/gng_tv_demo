@@ -54,7 +54,6 @@
             android:layout_alignParentBottom="true"
             android:layout_alignWithParentIfMissing="true"
             android:layout_marginBottom="@dimen/left_panel_bottom_margin"
-            android:layout_marginStart="@dimen/left_panel_left_margin"
             android:visibility="visible">
 
             <pt.gngtv.main.widget.TextViewObliqueStrike
@@ -142,7 +141,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/levilogo"
-            android:layout_marginLeft="10dp"
             android:contentDescription="@null" />
 
         <TextView
@@ -192,7 +190,7 @@
                 android:textColor="#ffffff"
                 fontPath="@string/roobotoCondensedLight"
                 android:text="@string/users_wishlist_message"
-                android:textSize="24sp"/>
+                android:textSize="20sp"/>
 
         </LinearLayout>
 
@@ -221,7 +219,7 @@
                 android:textColor="#ffffff"
                 fontPath="@string/roobotoCondensedLight"
                 android:text="@string/smart_playlist_message"
-                android:textSize="24sp"/>
+                android:textSize="20sp"/>
 
 
         </LinearLayout>

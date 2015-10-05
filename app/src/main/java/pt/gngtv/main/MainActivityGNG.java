@@ -264,7 +264,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         txtProdDiscountParams.width = show ? getResources().getDimensionPixelOffset(R.dimen.label_discount_width) : 0;
         txtProductDiscount.setLayoutParams(txtProdDiscountParams);
        // layoutSongInfo.setVisibility(visibility);
-        imgLeviLogo.setVisibility(show ? View.GONE : View.VISIBLE);
+    //    imgLeviLogo.setVisibility(show ? View.GONE : View.VISIBLE);
 
         if(!show) {
             /** Show some mock data. */
