@@ -79,8 +79,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     @Bind(R.id.playingSongTitle) TextView txtPlayingSongTitle;
     @Bind(R.id.playingSongAlbumTitle) TextView txtPlayingSongAlbumTitle;
     @Bind(R.id.songInfo) RelativeLayout layoutSongInfo;
-   // @Bind(R.id.triangle) View shapeTriangle;
-    @Bind(R.id.leviLogo) ImageView imgLeviLogo;
+   // @Bind(R.id.triangle) View shapeTriangle;;
 
     @Bind(R.id.priceContainer) RelativeLayout priceContainer;
 
@@ -264,8 +263,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         txtProdDiscountParams.width = show ? getResources().getDimensionPixelOffset(R.dimen.label_discount_width) : 0;
         txtProductDiscount.setLayoutParams(txtProdDiscountParams);
        // layoutSongInfo.setVisibility(visibility);
-        imgLeviLogo.setVisibility(show ? View.GONE : View.VISIBLE);
-
+        
         if(!show) {
             /** Show some mock data. */
             setUserName(null);
