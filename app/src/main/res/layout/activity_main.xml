@@ -7,6 +7,7 @@
     android:layout_weight="1"
     android:baselineAligned="false"
     android:orientation="horizontal"
+    android:background="@color/red_levis"
     tools:context=".MainActivity"
     tools:deviceIds="tv"
     tools:ignore="MissingPrefix">
@@ -14,14 +15,15 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/red_levis"
-        android:layout_weight="0.75"/>
+        android:layout_weight="0.90"/>
 
     <RelativeLayout
         android:id="@+id/leftPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.65">
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:layout_weight="0.75">
 
         <ImageSwitcher
             android:id="@+id/productSwitcher"
@@ -98,23 +100,23 @@
             android:background="@android:color/white"
             android:ellipsize="end"
             android:gravity="start"
-            android:paddingBottom="6dp"
+            android:paddingBottom="3dp"
             android:paddingEnd="@dimen/product_description_label_padding_right"
             android:paddingStart="@dimen/product_description_label_padding_left"
-            android:paddingTop="6dp"
+            android:paddingTop="3dp"
             android:singleLine="true"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/label_discount_text_size"
+            android:textSize="@dimen/label_product_name_text_size"
             tools:text="L/s Barstow Western" />
 
-        <View
+       <!-- <View
             android:id="@+id/triangle"
             android:layout_width="@dimen/shape_triangle_height"
             android:layout_height="@dimen/shape_triangle_height"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="@drawable/shape_red_triangle"
-            android:visibility="gone" />
+            android:visibility="gone" />-->
 
         <ImageView
             android:layout_width="match_parent"
@@ -140,117 +142,165 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/levilogo"
+            android:layout_marginLeft="10dp"
             android:contentDescription="@null" />
 
-        <TextSwitcher
-            android:id="@+id/first_name"
+        <TextView
+            android:id="@+id/connected_store"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/whishlistLabel"
+            android:textColor="#ffffff"
+            android:layout_marginTop="20dp"
+            android:text="@string/connected_store"
+            android:layout_below="@+id/leviLogo"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_alignWithParentIfMissing="true"
-            android:layout_below="@+id/leviLogo"
-            android:layout_centerInParent="true"
-            android:animateFirstView="false"
-            android:inAnimation="@android:anim/slide_in_left"
-            android:outAnimation="@android:anim/slide_out_right"
-            android:paddingBottom="20dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ellipsize="end"
-                android:gravity="start|center_vertical"
-                android:maxLines="6"
-                android:minLines="3"
-                android:textColor="#ffffff"
-                android:textSize="30sp"
-                tools:text="@string/welcome_nouser" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ellipsize="end"
-                android:gravity="start|center_vertical"
-                android:maxLines="6"
-                android:minLines="3"
-                android:textColor="#ffffff"
-                android:textSize="30sp" />
-        </TextSwitcher>
+            android:textSize="24sp"/>
 
         <TextView
-            android:id="@+id/whishlistLabel"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/shape_triangle_height"
-            android:layout_centerVertical="true"
-            android:ellipsize="end"
-            android:gravity="start"
-            android:maxLines="2"
+            android:id="@+id/connected_store_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/connected_store"
             android:textColor="#ffffff"
-            android:textSize="25sp"
-            android:visibility="gone"
-            tools:text="@string/whishlist_label" />
+            android:textSize="26sp"
+            fontPath="@string/roobotoCondensedLight"
+            android:text="@string/connected_store_message"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/connected_store_description"
+            android:layout_above="@+id/connected_store_music"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:layout_marginTop="20dp"
+                fontPath="@string/roobotoCondensedBold"
+                android:text="@string/users_wishlist_title"
+                android:textAllCaps="true"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                fontPath="@string/roobotoCondensedLight"
+                android:text="@string/users_wishlist_message"
+                android:textSize="24sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/connected_store_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/songInfo"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:layout_marginTop="20dp"
+                fontPath="@string/roobotoCondensedBold"
+                android:text="@string/smart_playlist_title"
+                android:textAllCaps="true"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                fontPath="@string/roobotoCondensedLight"
+                android:text="@string/smart_playlist_message"
+                android:textSize="24sp"/>
+
+
+        </LinearLayout>
+
 
         <RelativeLayout
             android:id="@+id/songInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:visibility="gone">
+            android:background="#0f0"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/albumCover"
+                    android:layout_width="@dimen/playing_song_cover_width"
+                    android:layout_height="@dimen/playing_song_cover_width"
+                    android:layout_marginEnd="@dimen/playing_song_icon_margin_right"
+                    android:background="@color/red_levis"
+                    android:contentDescription="@null"
+                    android:minHeight="70dp"
+                    android:minWidth="70dp" />
+
+                <TextView
+                    android:id="@+id/playingLabel"
+                    fontPath="@string/roobotoCondensedRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/albumCover"
+                    android:layout_toEndOf="@+id/albumCover"
+                    android:drawablePadding="15dp"
+                    android:drawableStart="@drawable/icn_playing"
+                    android:text="@string/playing_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/playing_label_text" />
+
+                <TextView
+                    android:id="@+id/playingSongTitle"
+                    fontPath="@string/roobotoCondensedLight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/albumCover"
+                    android:layout_alignStart="@+id/playingLabel"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/playing_song_title_text_size"
+                    tools:text="Can't feel my face" />
+
+                <TextView
+                    android:id="@+id/playingSongAlbumTitle"
+                    fontPath="@string/roobotoCondensedBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/playingSongTitle"
+                    android:layout_alignStart="@+id/playingLabel"
+                    android:layout_below="@+id/playingLabel"
+                    android:layout_marginBottom="-7dp"
+                    android:ellipsize="end"
+                    android:gravity="start|bottom"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/playing_song_title_text_size"
+                    android:textStyle="bold"
+                    tools:text="The Weeknd" />
+
+            </RelativeLayout>
 
             <ImageView
-                android:id="@+id/albumCover"
-                android:layout_width="@dimen/playing_song_cover_width"
-                android:layout_height="@dimen/playing_song_cover_width"
-                android:layout_marginEnd="@dimen/playing_song_icon_margin_right"
-                android:background="@android:color/white"
-                android:contentDescription="@null"
-                android:minHeight="70dp"
-                android:minWidth="70dp" />
-
-            <TextView
-                android:id="@+id/playingLabel"
-                fontPath="@string/roobotoCondensedRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/albumCover"
-                android:layout_toEndOf="@+id/albumCover"
-                android:drawablePadding="15dp"
-                android:drawableStart="@drawable/icn_playing"
-                android:text="@string/playing_label"
-                android:textAllCaps="true"
-                android:textColor="@color/playing_label_text" />
+                android:src="@drawable/spotify_icon"/>
 
-            <TextView
-                android:id="@+id/playingSongTitle"
-                fontPath="@string/roobotoCondensedLight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/albumCover"
-                android:layout_alignStart="@+id/playingLabel"
-                android:ellipsize="marquee"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/playing_song_title_text_size"
-                tools:text="Can't feel my face" />
-
-            <TextView
-                android:id="@+id/playingSongAlbumTitle"
-                fontPath="@string/roobotoCondensedBold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/playingSongTitle"
-                android:layout_alignStart="@+id/playingLabel"
-                android:layout_below="@+id/playingLabel"
-                android:layout_marginBottom="-7dp"
-                android:ellipsize="end"
-                android:gravity="start|bottom"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/playing_song_title_text_size"
-                android:textStyle="bold"
-                tools:text="The Weeknd" />
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

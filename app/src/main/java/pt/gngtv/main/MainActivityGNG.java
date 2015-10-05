@@ -31,6 +31,7 @@ import com.nineoldandroids.animation.Animator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -71,13 +72,14 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     @Bind(R.id.priceLabel) TextView txtProductPrice;
     @Bind(R.id.productDescriptionLabel) TextView txtProductDescription;
     @Bind(R.id.productSwitcher) ImageSwitcher imgProductPicture;
-    @Bind(R.id.first_name) TextSwitcher txtUsername;
-    @Bind(R.id.whishlistLabel) TextView txtWhishlist;
+   // @Bind(R.id.first_name) TextSwitcher txtUsername;
+   // @Bind(R.id.whishlistLabel) TextView txtWhishlist;
+    @Bind(R.id.connected_store) TextView txtConnectedStore;
     @Bind(R.id.albumCover) ImageView imgAlbumCover;
     @Bind(R.id.playingSongTitle) TextView txtPlayingSongTitle;
     @Bind(R.id.playingSongAlbumTitle) TextView txtPlayingSongAlbumTitle;
     @Bind(R.id.songInfo) RelativeLayout layoutSongInfo;
-    @Bind(R.id.triangle) View shapeTriangle;
+   // @Bind(R.id.triangle) View shapeTriangle;
     @Bind(R.id.leviLogo) ImageView imgLeviLogo;
 
     @Bind(R.id.priceContainer) RelativeLayout priceContainer;
@@ -98,6 +100,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         setActivityInterface(this, this);
 
         showViews(false);
+        setConnectedStoreText();
     }
 
     @Override
@@ -122,8 +125,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     public void setContent(List<Wishlist> data) {
         if(data != null && data.size() > 0) {
             Log.e("First Wishlist Name:", data.get(0).getTitle());
-            txtWhishlist.setText(formatWhishlistName(data.get(0).getTitle()));
             mController.loadWishlistModels(data.get(0).getId(), accessToken);
+
         }
     }
 
@@ -256,13 +259,12 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     private void showViews(boolean show) {
         int visibility = show ? View.VISIBLE : View.GONE;
         hasUser = show;
-        shapeTriangle.setVisibility(visibility);
+       // shapeTriangle.setVisibility(visibility);
         RelativeLayout.LayoutParams txtProdDiscountParams = (RelativeLayout.LayoutParams) txtProductDiscount.getLayoutParams();
         txtProdDiscountParams.width = show ? getResources().getDimensionPixelOffset(R.dimen.label_discount_width) : 0;
         txtProductDiscount.setLayoutParams(txtProdDiscountParams);
        // layoutSongInfo.setVisibility(visibility);
         imgLeviLogo.setVisibility(show ? View.GONE : View.VISIBLE);
-        txtWhishlist.setVisibility(visibility);
 
         if(!show) {
             /** Show some mock data. */
@@ -276,11 +278,11 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
             model.setPrice(98.5f);
             data.add(model);
             Model model1 = new Model();
-            model1.setName("Otis beanie");
+            model1.setName("Sawtooth Western Shirt");
             Cover cover1 = new Cover();
-            cover1.setImage("http://lsco.scene7.com/is/image/lsco/Levi/accessories/771380903-front-pdp.jpg?$1330x800main$");
+            cover1.setImage("http://lsco.scene7.com/is/image/lsco/Levi/clothing/658190071-front-pdp.jpg?$1330x800main$");
             model1.setCover(cover1);
-            model1.setPrice(71.9f);
+            model1.setPrice(85f);
             data.add(model1);
             Model model2 = new Model();
             model2.setName("Stock workshirt");
@@ -292,21 +294,24 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
             setModelsContent(data);
         }
+    }
 
-      /*  else{
-            mController.loadSpotifyData();
-        }*/
+    public void setConnectedStoreText(){
+
+        SpannableStringBuilder spanName = new SpannableStringBuilder(getString(R.string.connected_store, getString(R.string.connected_store_by_thing_pink)).toUpperCase(Locale.US));
+        Typeface bold = Typeface.createFromAsset(getAssets(), getString(R.string.roobotoCondensedBold));
+        int welcomeLegnth = getString(R.string.connected_store,"").trim().length();
+        spanName.setSpan (new TypeFaceSpan("", bold), 0, spanName.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spanName.setSpan(new RelativeSizeSpan(0.8f), welcomeLegnth + 1, spanName.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        txtConnectedStore.setText(spanName);
     }
 
     public void setUserName(String userName) {
-        if(txtUsername != null && !TextUtils.isEmpty(userName)) {
-            txtUsername.setText(formatUserName(getString(R.string.welcome, userName)));
-        }else if(txtUsername != null){
-            txtUsername.setText(formatUserName(getString(R.string.welcome_nouser)));
-        }
+
     }
 
     private SpannableStringBuilder formatWhishlistName(String whilistName) {
+
         SpannableStringBuilder spanName = new SpannableStringBuilder(getString(R.string.whishlist_label, whilistName));
 
         Typeface light = Typeface.createFromAsset(getAssets(), getString(R.string.roobotoCondensedLight));

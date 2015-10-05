@@ -7,10 +7,11 @@
 
     <dimen name="right_panel_left_margin">40dp</dimen>
     <dimen name="right_panel_right_margin">@dimen/right_panel_left_margin</dimen>
-    <dimen name="right_panel_top_margin">70dp</dimen>
+    <dimen name="right_panel_top_margin">40dp</dimen>
     <dimen name="right_panel_bottom_margin">@dimen/left_panel_bottom_margin</dimen>
 
-    <dimen name="label_discount_text_size">26sp</dimen>
+    <dimen name="label_product_name_text_size">23sp</dimen>
+    <dimen name="label_discount_text_size">24sp</dimen>
     <dimen name="label_price_text_size">@dimen/label_discount_text_size</dimen>
     <dimen name="label_product_description_text_size">@dimen/label_discount_text_size</dimen>
     <dimen name="label_discount_width">100dp</dimen>
@@ -20,7 +21,7 @@
     <dimen name="product_description_label_padding_right">20dp</dimen>
 
     <dimen name="playing_song_cover_width">70dp</dimen>
-    <dimen name="playing_song_icon_margin_right">30dp</dimen>
+    <dimen name="playing_song_icon_margin_right">15dp</dimen>
     <dimen name="playing_song_title_text_size">20sp</dimen>
     <dimen name="text_strike_stroke_width">2dp</dimen>
     <dimen name="shape_triangle_height">70dp</dimen>

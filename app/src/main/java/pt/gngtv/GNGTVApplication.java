@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by filiperodrigues on 28/09/15.
@@ -66,6 +67,11 @@ public class GNGTVApplication extends Application {
                 .setEndpoint(Globals.SPOTIFY_HOST_NAME)
                 .build();
 
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/Roboto-RobotoRegular.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
 
     }
 

@@ -1,9 +1,21 @@
 <resources>
     <string name="app_name">GNG TV</string>
 
-    <string name="playing_label">A tocar</string>
+    <string name="playing_label">Now Playing</string>
     <string name="whishlist_label">Artigos da sua whishlist\n%1$s</string>
     <string name="welcome">Bem-vindo,\n%1$s</string>
     <string name="welcome_nouser">Levi\'s Smart Signage\nLigue aqui o Bluetooth do seu smartphone</string>
     <string name="price_label">%1$s€</string>
+
+    <string name="connected_store">Connected Store %1$s</string>
+    <string name="connected_store_by_thing_pink">By Thing Pink</string>
+    <string name="connected_store_message">Out platform identifies users delivering a personalized environment based on the user profile.</string>
+
+    <string name="users_wishlist_title">Users Wishlist</string>
+    <string name="users_wishlist_message">Smart Signage with the users wishlist, pushing promotions and smart content.</string>
+
+    <string name="smart_playlist_title">Smart Playlist</string>
+    <string name="smart_playlist_message">Music synchronized with the user\'s preference.</string>
+
+
 </resources>
