@@ -119,6 +119,7 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         super.onDestroy();
 
         if(timer != null) timer.cancel();
+        if(animationTimer != null) animationTimer.cancel();
         ButterKnife.unbind(this);
     }
 
@@ -361,13 +362,11 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
                 .duration(700)
                 .playOn(layoutSongInfo);
 
-        if(animationTimer != null) {
-            animationTimer.cancel();
-            animationTimer.purge();
+        if(animationTimer == null) {
+            animationTimer = new Timer();
+            animationTimer.schedule(animationTask, 700, 5000);
         }
 
-        animationTimer = new Timer();
-        animationTimer.schedule(animationTask, 700, 5000);
 
         layoutSongInfo.setVisibility(View.VISIBLE);
         txtPlayingSongTitle.setText(track.getName());
