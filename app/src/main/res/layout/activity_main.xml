@@ -15,14 +15,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:layout_weight="0.90"/>
 
     <RelativeLayout
         android:id="@+id/leftPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
         android:layout_weight="0.75">
 
       <!--  <FrameLayout
@@ -39,7 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:animateFirstView="false"
-            android:padding="2dp"
             android:inAnimation="@android:anim/fade_in"
             android:outAnimation="@android:anim/fade_out">
 
@@ -123,6 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+            android:visibility="gone"
             android:src="@drawable/moldura_smartv"/>
 
     </RelativeLayout>
@@ -133,6 +132,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.45"
         android:background="@color/red_levis"
+        android:visibility="gone"
         android:paddingBottom="@dimen/right_panel_bottom_margin"
         android:paddingEnd="@dimen/right_panel_right_margin"
         android:paddingStart="@dimen/right_panel_left_margin"

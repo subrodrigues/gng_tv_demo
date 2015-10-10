@@ -10,8 +10,8 @@
     <dimen name="right_panel_top_margin">30dp</dimen>
     <dimen name="right_panel_bottom_margin">@dimen/left_panel_bottom_margin</dimen>
 
-    <dimen name="label_product_name_text_size">23sp</dimen>
-    <dimen name="label_discount_text_size">24sp</dimen>
+    <dimen name="label_product_name_text_size">33sp</dimen>
+    <dimen name="label_discount_text_size">34sp</dimen>
     <dimen name="label_price_text_size">@dimen/label_discount_text_size</dimen>
     <dimen name="label_product_description_text_size">@dimen/label_discount_text_size</dimen>
     <dimen name="label_discount_width">100dp</dimen>
