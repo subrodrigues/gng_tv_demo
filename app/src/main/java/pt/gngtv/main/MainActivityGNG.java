@@ -14,8 +14,14 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -90,6 +96,9 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     @Bind(R.id.playingIcon) ImageView songMusicIcon;
     @Bind(R.id.playingLabel) TextView songPlayingLabel;
 
+    private Animation zoomIn;
+    private Animation zoomOut;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +116,18 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
         showViews(false);
         setConnectedStoreText();
+
+        WindowManager w = getWindowManager();
+        Display d = w.getDefaultDisplay();
+        @SuppressWarnings("deprecation")
+        int width = d.getWidth();
+        int height = d.getHeight();
+
+        zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+        zoomOut = AnimationUtils.loadAnimation(this, R.anim.zoom_out);
+
+        zoomIn.setAnimationListener(translationDownAnimationListener);
+        imgProductPicture.startAnimation(zoomIn);
     }
 
     @Override
@@ -408,4 +429,41 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         }
     };
 
+    private Animation.AnimationListener translationDownAnimationListener = new Animation.AnimationListener() {
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            zoomOut.setAnimationListener(translationUpAnimationListener);
+            imgProductPicture.clearAnimation();
+            imgProductPicture.startAnimation(zoomOut);
+        }
+    };
+
+    private Animation.AnimationListener translationUpAnimationListener = new Animation.AnimationListener() {
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            zoomIn.setAnimationListener(translationDownAnimationListener);
+            imgProductPicture.clearAnimation();
+            imgProductPicture.startAnimation(zoomIn);
+        }
+    };
 }
