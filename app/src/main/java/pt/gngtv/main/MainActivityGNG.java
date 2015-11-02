@@ -209,6 +209,10 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
+                                    
+                                    if(isFinishing())
+                                        return;
+
                                     if(product.getCover().getImage() != null) {
                                         Glide.with(MainActivityGNG.this).load(product.getCover().getImage()).asBitmap().into(new SimpleTarget<Bitmap>(1080, 1080) {
                                             @Override
@@ -285,6 +289,10 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     }
 
     private void showViews(boolean show) {
+
+        if(isFinishing())
+            return;
+
         int visibility = show ? View.VISIBLE : View.GONE;
         hasUser = show;
        // shapeTriangle.setVisibility(visibility);
