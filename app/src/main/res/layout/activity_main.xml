@@ -7,7 +7,7 @@
     android:layout_weight="1"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    android:background="@color/red_levis"
+    android:background="@color/white"
     tools:context=".MainActivity"
     tools:deviceIds="tv"
     tools:ignore="MissingPrefix">

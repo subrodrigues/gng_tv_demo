@@ -14,20 +14,13 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -35,6 +28,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nineoldandroids.animation.Animator;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +54,6 @@ import pt.gngtv.model.Cover;
 import pt.gngtv.model.GNGFirebaseModel;
 import pt.gngtv.model.Model;
 import pt.gngtv.model.SpotifyTrack;
-import pt.gngtv.model.SpotifyTracksModel;
 import pt.gngtv.model.Wishlist;
 import pt.gngtv.utils.TypeFaceSpan;
 import pt.gngtv.utils.Utils;
@@ -99,6 +93,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
     private Animation zoomIn;
     private Animation zoomOut;
 
+    private Typeface gngTypeface;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +102,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
         ButterKnife.bind(this);
         service = new WebService<>(((GNGTVApplication) getApplication()).restAdapter.create(GNGWebService.class));
+
+        gngTypeface = Typeface.createFromAsset(getAssets(),"fonts/RobotoCondensed-Regular.ttf");
 
         if (mController == null) {
             mController = new MainController(this);
@@ -268,6 +266,17 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         }
     }
 
+    private void showSnackBar(String message){
+        SnackbarManager.show(
+                Snackbar.with(MainActivityGNG.this)
+                        .text(message)
+                      //  .duration(Snackbar.SnackbarDuration.LENGTH_)
+                        .textColor(Color.WHITE) // change the text color
+                        .textTypeface(gngTypeface)
+                        .animation(true)
+                        .color(getResources().getColor(R.color.red_levis)));
+    }
+
     @Override
     public void setUserInfo(GNGFirebaseModel userInfo) {
        // Toast.makeText(this, "user: " + userInfo.user_name, Toast.LENGTH_LONG).show();
@@ -337,6 +346,8 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
 
     public void setUserName(String userName) {
 
+        if(!TextUtils.isEmpty(userName))
+            showSnackBar("Favoritos de " + userName);
     }
 
     private SpannableStringBuilder formatWhishlistName(String whilistName) {

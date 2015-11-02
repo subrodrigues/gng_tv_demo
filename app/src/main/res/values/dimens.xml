@@ -3,7 +3,7 @@
 
     <dimen name="left_panel_left_margin">30dp</dimen>
     <dimen name="left_panel_right_margin">@dimen/left_panel_left_margin</dimen>
-    <dimen name="left_panel_bottom_margin">30dp</dimen>
+    <dimen name="left_panel_bottom_margin">60dp</dimen>
 
     <dimen name="right_panel_left_margin">40dp</dimen>
     <dimen name="right_panel_right_margin">@dimen/right_panel_left_margin</dimen>
