@@ -117,12 +117,6 @@ public class MainActivityGNG extends SpotifyBaseActivity implements MainControll
         showViews(false);
         setConnectedStoreText();
 
-        WindowManager w = getWindowManager();
-        Display d = w.getDefaultDisplay();
-        @SuppressWarnings("deprecation")
-        int width = d.getWidth();
-        int height = d.getHeight();
-
         zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
         zoomOut = AnimationUtils.loadAnimation(this, R.anim.zoom_out);
 
